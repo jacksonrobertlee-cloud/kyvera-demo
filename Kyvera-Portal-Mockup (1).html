@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kyvera Solutions — Portal Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233B;
+    --ink-2:#1D2E4A;
+    --paper:#E9EEF0;
+    --surface:#FFFFFF;
+    --text:#1B2430;
+    --muted:#5B6472;
+    --rule:#C7CDD3;
+    --amber:#D98E2B;
+    --amber-deep:#B9741C;
+    --green:#2F7D5B;
+    --green-bg:#E7F1EC;
+    --red:#B23B2E;
+    --red-bg:#FBECE9;
+    --yellow:#C98A1E;
+    --yellow-bg:#FBF1DE;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Barlow Semi Condensed',sans-serif;
+    font-weight:700;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .app{
+    display:flex;
+    min-height:100vh;
+  }
+  .sidebar{ flex:0 0 220px; }
+  main{ flex:1; min-width:0; }
+  /* Sidebar */
+  .sidebar{
+    background:var(--ink);
+    color:#DDE4EE;
+    padding:28px 18px;
+    display:flex;
+    flex-direction:column;
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin-bottom:6px;
+  }
+  .brand-mark{
+    width:9px;height:9px;
+    background:var(--amber);
+    display:inline-block;
+    transform:rotate(45deg);
+    margin-right:2px;
+  }
+  .brand-name{
+    font-family:'Barlow Semi Condensed',sans-serif;
+    font-weight:700;
+    font-size:21px;
+    color:#fff;
+    letter-spacing:0.3px;
+  }
+  .brand-sub{
+    font-size:11.5px;
+    color:#8B98AE;
+    margin:2px 0 34px 15px;
+    line-height:1.4;
+  }
+  nav{display:flex;flex-direction:column;gap:2px;}
+  .nav-item{
+    padding:9px 12px;
+    border-radius:3px;
+    font-size:14.5px;
+    color:#B7C1D4;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    transition:background 0.12s ease, color 0.12s ease;
+    border-left:2px solid transparent;
+  }
+  .nav-item:hover{ color:#fff; }
+  .nav-item.active{
+    background:rgba(217,142,43,0.14);
+    color:#fff;
+    border-left:2px solid var(--amber);
+    font-weight:500;
+  }
+  .nav-badge{
+    background:var(--amber);
+    color:var(--ink);
+    font-size:11px;
+    font-weight:700;
+    padding:1px 6px;
+    border-radius:9px;
+  }
+  .sidebar-foot{
+    margin-top:auto;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,0.08);
+    font-size:12px;
+    color:#7A87A0;
+    line-height:1.6;
+  }
+
+  /* Main */
+  main{ padding:30px 40px 60px; max-width:1180px; }
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:26px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--rule);
+  }
+  .client-name{ font-size:26px; }
+  .client-sub{ color:var(--muted); font-size:13.5px; margin-top:3px; }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    border:none;
+    padding:10px 16px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:filter 0.12s ease;
+  }
+  .btn:hover{ filter:brightness(0.94); }
+  .btn-primary{ background:var(--ink); color:#fff; }
+  .btn-amber{ background:var(--amber); color:#1B1300; }
+  .btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--rule); }
+
+  section.screen{ display:none; }
+  section.screen.active{ display:block; }
+
+  /* Dashboard */
+  .attention-head{ margin-bottom:16px; }
+  .attention-head .eyebrow{ color:var(--muted); font-size:13px; margin-bottom:2px; }
+  .attention-head h2{ font-size:22px; }
+
+  .ledger-strip{
+    display:flex;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:30px;
+  }
+  .ledger-cell{
+    flex:1 1 0;
+    padding:18px 20px;
+    border-left:1px solid var(--rule);
+  }
+  .ledger-cell:first-child{ border-left:none; }
+  .ledger-num{ font-family:'Barlow Semi Condensed',sans-serif; font-weight:700; font-size:32px; line-height:1; }
+  .ledger-label{ color:var(--muted); font-size:12.5px; margin-top:6px; }
+  .ledger-cell.flag .ledger-num{ color:var(--red); }
+  .ledger-cell.warn .ledger-num{ color:var(--yellow); }
+
+  .two-col{ display:flex; gap:28px; }
+  .two-col > div:first-child{ flex:1.5; min-width:0; }
+  .two-col > div:last-child{ flex:1; min-width:0; }
+  .panel-title{ font-size:15px; margin-bottom:12px; color:var(--text); }
+
+  .action-row{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:13px 14px;
+    background:var(--surface);
+    border-left:3px solid var(--red);
+    border-radius:2px;
+    margin-bottom:8px;
+  }
+  .action-row.warn{ border-left-color:var(--yellow); }
+  .action-row.ok{ border-left-color:var(--green); }
+  .action-title{ font-size:14px; font-weight:600; }
+  .action-sub{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+
+  .activity-item{
+    padding:10px 0;
+    border-bottom:1px solid var(--rule);
+    font-size:13px;
+  }
+  .activity-item:last-child{ border-bottom:none; }
+  .activity-time{ color:var(--muted); font-size:11.5px; }
+
+  /* Documents / OCR screen */
+  .scan-layout{ display:flex; gap:30px; align-items:flex-start; }
+  .scan-layout > div{ flex:1; min-width:0; }
+  .upload-box{
+    background:var(--surface);
+    border:1.5px dashed var(--rule);
+    border-radius:6px;
+    padding:36px 24px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13.5px;
+  }
+  .upload-box .icon{
+    width:38px;height:38px;
+    margin:0 auto 14px;
+    border:1.5px solid var(--muted);
+    border-radius:4px;
+    position:relative;
+  }
+  .doc-thumb{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:14px;
+    margin-top:16px;
+  }
+  .doc-thumb img{ width:100%; border-radius:3px; display:block; }
+  .doc-thumb-cap{ font-size:12px; color:var(--muted); margin-top:8px; }
+
+  .extract-panel{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:22px;
+    opacity:0;
+    transform:translateY(6px);
+    pointer-events:none;
+    transition:opacity 0.28s ease, transform 0.28s ease;
+  }
+  .extract-panel.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+  .extract-panel h3{ font-size:16px; margin-bottom:4px; }
+  .extract-sub{ font-size:12.5px; color:var(--muted); margin-bottom:18px; }
+
+  .field-row{ margin-bottom:16px; }
+  .field-label{ font-size:12px; color:var(--muted); margin-bottom:5px; }
+  .field-hint{ display:block; margin-top:2px; }
+  .field-input{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:9px 11px;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    background:#fcfcfb;
+  }
+  .field-row.sensitive .field-input{ border-color:var(--amber-deep); background:var(--yellow-bg); }
+  .lock-tag{
+    font-size:10.5px;
+    font-weight:700;
+    color:var(--amber-deep);
+    background:var(--yellow-bg);
+    border:1px solid var(--amber-deep);
+    border-radius:9px;
+    padding:1px 7px;
+  }
+  .confirm-line{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    color:var(--text);
+    margin-top:6px;
+  }
+
+  /* Subcontractors */
+  table.ledger{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  table.ledger th{
+    text-align:left;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:11.5px;
+    color:var(--muted);
+    padding:12px 16px;
+    border-bottom:1px solid var(--rule);
+  }
+  table.ledger td{
+    padding:13px 16px;
+    font-size:13.5px;
+    border-bottom:1px solid var(--rule);
+  }
+  table.ledger tr:last-child td{ border-bottom:none; }
+  .pill{
+    display:inline-block;
+    font-size:11.5px;
+    font-weight:600;
+    padding:3px 9px;
+    border-radius:9px;
+  }
+  .pill.ok{ background:var(--green-bg); color:var(--green); }
+  .pill.miss{ background:var(--red-bg); color:var(--red); }
+  .row-flag{ border-left:3px solid var(--red); }
+  .row-clean{ border-left:3px solid var(--green); }
+  td.trade{ color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"></span><span class="brand-name">KYVERA</span></div>
+    <div class="brand-sub">Workforce compliance<br>for trades &amp; service businesses</div>
+    <nav>
+      <div class="nav-item active" data-target="dashboard">Dashboard</div>
+      <div class="nav-item" data-target="documents">Documents<span class="nav-badge">New</span></div>
+      <div class="nav-item" data-target="subcontractors">Subcontractors</div>
+      <div class="nav-item">Employees</div>
+      <div class="nav-item">Audit Log</div>
+      <div class="nav-item">Export Report</div>
+    </nav>
+    <div class="sidebar-foot">
+      Houston Comfort Plumbing &amp; HVAC<br>
+      Plan: Workforce
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- DASHBOARD -->
+    <section class="screen active" id="dashboard">
+      <div class="topbar">
+        <div>
+          <div class="client-name">Houston Comfort Plumbing &amp; HVAC</div>
+          <div class="client-sub">4 job sites &middot; 42 employees &middot; 11 subcontractors</div>
+        </div>
+        <button class="btn btn-primary">+ Add Employee</button>
+      </div>
+
+      <div class="attention-head">
+        <div class="eyebrow">Today</div>
+        <h2>What needs your attention</h2>
+      </div>
+
+      <div class="ledger-strip">
+        <div class="ledger-cell"><div class="ledger-num">42</div><div class="ledger-label">Employees</div></div>
+        <div class="ledger-cell flag"><div class="ledger-num">2</div><div class="ledger-label">I-9s overdue</div></div>
+        <div class="ledger-cell warn"><div class="ledger-num">3</div><div class="ledger-label">Docs expiring &le;90d</div></div>
+        <div class="ledger-cell warn"><div class="ledger-num">2</div><div class="ledger-label">Missing subcontractor insurance</div></div>
+        <div class="ledger-cell flag"><div class="ledger-num">1</div><div class="ledger-label">W-9 missing</div></div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="panel-title">Action items</div>
+          <div class="action-row">
+            <div>
+              <div class="action-title">Section 2 overdue — Marcus Webb</div>
+              <div class="action-sub">Hired Aug 4 &middot; Section 2 not completed within 3 business days</div>
+            </div>
+          </div>
+          <div class="action-row">
+            <div>
+              <div class="action-title">Driver's license expired — Ana Torres</div>
+              <div class="action-sub">List B document expired Jul 30 &middot; reverification needed</div>
+            </div>
+          </div>
+          <div class="action-row warn">
+            <div>
+              <div class="action-title">Insurance certificate missing — R. Delgado (plumbing subcontractor)</div>
+              <div class="action-sub">No general liability insurance on file &middot; flagged before next job assignment</div>
+            </div>
+          </div>
+          <div class="action-row warn">
+            <div>
+              <div class="action-title">EAD expiring in 62 days — Samuel Price</div>
+              <div class="action-sub">List A document expires Oct 15 &middot; schedule reverification</div>
+            </div>
+          </div>
+          <div class="action-row ok">
+            <div>
+              <div class="action-title">No late-filing issues this week</div>
+              <div class="action-sub">All Section 1/2 completions within required windows</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel-title">Recent activity</div>
+          <div class="activity-item">Document scanned &amp; confirmed — Miguel Ramirez (W-9)<div class="activity-time">Today, 9:14 AM</div></div>
+          <div class="activity-item">Onboarding link generated — new HVAC technician<div class="activity-time">Today, 8:52 AM</div></div>
+          <div class="activity-item">Employee added — Ana Torres<div class="activity-time">Yesterday, 4:20 PM</div></div>
+          <div class="activity-item">Misclassification assessment run — R. Delgado<div class="activity-time">Yesterday, 2:05 PM</div></div>
+          <div class="activity-item">PDF audit report generated<div class="activity-time">Aug 8, 11:40 AM</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOCUMENTS / OCR -->
+    <section class="screen" id="documents">
+      <div class="topbar">
+        <div>
+          <div class="client-name">Scan a Document</div>
+          <div class="client-sub">Snap a photo — Kyvera extracts the fields for you to confirm</div>
+        </div>
+      </div>
+
+      <div class="scan-layout">
+        <div>
+          <div class="upload-box">
+            <div class="icon"></div>
+            driver_license_photo.jpg uploaded
+          </div>
+          <div class="doc-thumb">
+            <img alt="Sample scanned driver's license" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Crect width='400' height='240' fill='%23f4f2ec'/%3E%3Crect x='14' y='14' width='372' height='212' rx='6' fill='%23ffffff' stroke='%23c7cdd3'/%3E%3Ctext x='30' y='45' font-family='Arial' font-size='13' fill='%235b6472'%3ETEXAS DRIVER LICENSE%3C/text%3E%3Ctext x='30' y='90' font-family='Arial' font-size='16' font-weight='bold' fill='%231b2430'%3EMIGUEL RAMIREZ%3C/text%3E%3Ctext x='30' y='120' font-family='Arial' font-size='12' fill='%231b2430'%3EDL 4839201755%3C/text%3E%3Ctext x='30' y='145' font-family='Arial' font-size='12' fill='%231b2430'%3EEXP 03/14/2029%3C/text%3E%3Crect x='260' y='60' width='100' height='120' fill='%23e9eef0' stroke='%23c7cdd3'/%3E%3C/svg%3E">
+            <div class="doc-thumb-cap">List B — Driver's License, Miguel Ramirez</div>
+          </div>
+          <button class="btn btn-amber" style="margin-top:16px; width:100%;" onclick="document.getElementById('extractPanel').classList.add('show')">Extract Fields</button>
+        </div>
+
+        <div class="extract-panel" id="extractPanel">
+          <h3>Fields extracted</h3>
+          <div class="extract-sub">Tesseract OCR &middot; review every field before saving</div>
+
+          <div class="field-row">
+            <div class="field-label">Document title</div>
+            <input class="field-input" value="Driver's License">
+          </div>
+          <div class="field-row">
+            <div class="field-label">Expiration date<span class="field-hint" style="color:var(--green); font-weight:600;">matched near "EXP" label</span></div>
+            <input class="field-input" value="03/14/2029">
+          </div>
+          <div class="field-row sensitive">
+            <div class="field-label">Document number <span class="lock-tag">CONFIRM</span></div>
+            <input class="field-input" value="4839201755">
+            <div class="confirm-line">
+              <input type="checkbox" id="confirmChk">
+              <label for="confirmChk">I checked this against the physical document</label>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;">Save Document</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBCONTRACTORS -->
+    <section class="screen" id="subcontractors">
+      <div class="topbar">
+        <div>
+          <div class="client-name">Subcontractors</div>
+          <div class="client-sub">W-9 &amp; documentation status across all trades</div>
+        </div>
+        <button class="btn btn-primary">Generate Onboarding Link</button>
+      </div>
+
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Trade</th>
+            <th>W-9</th>
+            <th>Agreement</th>
+            <th>Insurance</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-clean">
+            <td>Miguel Ramirez</td>
+            <td class="trade">HVAC install</td>
+            <td><span class="pill ok">On file</span></td>
+            <td><span class="pill ok">Signed</span></td>
+            <td><span class="pill ok">Current</span></td>
+            <td>Active</td>
+          </tr>
+          <tr class="row-flag">
+            <td>R. Delgado</td>
+            <td class="trade">Plumbing</td>
+            <td><span class="pill ok">On file</span></td>
+            <td><span class="pill ok">Signed</span></td>
+            <td><span class="pill miss">Missing</span></td>
+            <td>Review recommended</td>
+          </tr>
+          <tr class="row-flag">
+            <td>James Ortiz</td>
+            <td class="trade">Electrical</td>
+            <td><span class="pill miss">Missing</span></td>
+            <td><span class="pill miss">Missing</span></td>
+            <td><span class="pill miss">Missing</span></td>
+            <td>Pending onboarding</td>
+          </tr>
+          <tr class="row-clean">
+            <td>Elena Cruz</td>
+            <td class="trade">HVAC service</td>
+            <td><span class="pill ok">On file</span></td>
+            <td><span class="pill ok">Signed</span></td>
+            <td><span class="pill ok">Current</span></td>
+            <td>Active</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.nav-item[data-target]').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      document.querySelectorAll('.nav-item[data-target]').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById(item.dataset.target).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
